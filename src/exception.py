@@ -24,7 +24,7 @@ class CustomException(Exception):
 
 if __name__ == "__main__":
     try:
-        res = 1/0
+        res = 1 / 0
 
     except Exception as e:
         logging.info("Exception Zero Division")
