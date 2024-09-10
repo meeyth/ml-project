@@ -30,6 +30,7 @@ class DataTransformation:
         This function si responsible for data trnasformation
 
         '''
+
         try:
             numerical_columns = ["writing_score", "reading_score"]
             categorical_columns = [
