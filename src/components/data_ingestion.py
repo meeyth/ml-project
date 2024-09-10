@@ -1,8 +1,14 @@
 import os
 import sys
+
+import pandas as pd
+
 from src.exception import CustomException
 from src.logger import logging
-import pandas as pd
+from src.components.data_transformation import (
+    DataTransformation,
+    DataTransformationConfig
+)
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
@@ -22,7 +28,7 @@ class DataIngestion:
         self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self):
-        logging.info("Entered the data ingestion method or component")
+        logging.info("Entered into the data ingestion component")
         try:
             # df = pd.read_csv('notebook\data\stud.csv')
 
@@ -44,6 +50,7 @@ class DataIngestion:
                       index=False, header=True)
 
             logging.info("Train test split initiated")
+
             train_set, test_set = train_test_split(
                 df, test_size=0.2, random_state=42)
 
@@ -58,12 +65,15 @@ class DataIngestion:
             return (
                 self.ingestion_config.train_data_path,
                 self.ingestion_config.test_data_path
-
             )
+
         except Exception as e:
             raise CustomException(e, sys)
 
 
 if __name__ == "__main__":
     di_obj = DataIngestion()
-    train_data, test_data = di_obj.initiate_data_ingestion()
+    train_data_path, test_data_path = di_obj.initiate_data_ingestion()
+
+    dt_obj = DataTransformation()
+    dt_obj.initiate_data_transformation(train_data_path, test_data_path)
